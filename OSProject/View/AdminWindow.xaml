@@ -1,0 +1,149 @@
+﻿<controls:Window x:Class="OSProject.View.AdminWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Loaded="AdminWindow_OnLoaded"
+                 xmlns:controls="clr-namespace:Elysium.Controls;assembly=Elysium"
+        xmlns:params="http://schemas.codeplex.com/elysium/params"
+        xmlns:extra="http://schemas.extra.com/ui"
+        xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+                 xmlns:behaviors="clr-namespace:OSProject.Model.Behaviors"
+        WindowStartupLocation="CenterScreen" 
+        params:Design.Theme="Light" 
+        params:Manager.Theme="Light" 
+                 params:Design.AccentBrush="Green" 
+        params:Manager.AccentBrush="Green" 
+                 params:Design.ContrastBrush="White" 
+        params:Manager.ContrastBrush="White" 
+              Title="Admin interface" Height="648.5" Width="807.5" Icon="icon.png">
+    <extra:Window.ApplicationBar>
+        <controls:ApplicationBar>
+            <controls:CommandButton Header="Настройки" Click="SettingsButton_OnClick"
+                                 Margin="{Binding RelativeSource={RelativeSource Self}, Path=(params:General.BoldPadding), Mode=OneWay}">
+                <Path Data="{StaticResource Settings1Geometry}"
+                      Fill="Black"
+                      Stroke="Black"
+                      Width="24" Height="24"/>
+
+            </controls:CommandButton>
+            <controls:CommandButton Header="Обновить" Click="RefreshButton_OnClick"
+                                 Margin="{Binding RelativeSource={RelativeSource Self}, Path=(params:General.BoldPadding), Mode=OneWay}">
+                <Path Data="{StaticResource Refresh1Geometry}"
+                      Fill="Black"
+                      Stroke="Black"
+                      Width="24" Height="24"/>
+
+            </controls:CommandButton>
+        </controls:ApplicationBar>
+    </extra:Window.ApplicationBar>
+    <Grid>
+
+        <Menu Height="40" VerticalAlignment="Top">
+            <MenuItem Header="ПОМОЩЬ">
+                <MenuItem Header="О программе" Click="aboutMenuItem_OnClick" />
+                <MenuItem Header="Помощь" Command="{Binding HelpCommand}"/>
+            </MenuItem>
+        </Menu>
+        <TabControl Margin="6,45,6,6">
+            <TabItem Header="Пользователи">
+                <extra:Wizard x:Name="Wizard"
+                          Grid.ColumnSpan="6" 
+                          Grid.Row="2"
+                          Mode="Linear">
+                    <extra:WizardItem
+                                  Description="Home Description" 
+                                  Icon="{StaticResource HouseGeometry}"
+                                  Id="Home"
+                                  Title="Home"/>
+                    <extra:WizardItem
+                                  
+                                  Description="Users Description" 
+                                  EnteringCommand="{Binding EnteringCommand}"
+                                  EnteringFirstTimeCommand="{Binding EnteringFirstTimeCommand}"
+                                  Icon="{StaticResource User1Geometry}"
+                                  Id="User"
+                                  IsBackwardEnabled="{Binding IsBackwardEnabled}"
+                                  IsForwardEnabled="{Binding IsForwardEnabled}"
+                                  IsForwardVisible="True"
+                                  LeavingCommand="{Binding LeavingCommand}"
+                                  ParentId="Home"
+                                  Title="Пользователи"/>
+                    <extra:WizardItem
+                                  
+                                  Description="Admins Description" 
+                                  EnteringCommand="{Binding EnteringCommand}"
+                                  EnteringFirstTimeCommand="{Binding EnteringFirstTimeCommand}"
+                                  Icon="{StaticResource User1Geometry}"
+                                  Id="Admin"
+                                  IsBackwardEnabled="{Binding IsBackwardEnabled}"
+                                  IsForwardEnabled="{Binding IsForwardEnabled}"
+                                  IsForwardVisible="True"
+                                  LeavingCommand="{Binding LeavingCommand}"
+                                  ParentId="Home"
+                                  Title="Администраторы"/>
+                </extra:Wizard>
+            </TabItem>
+            <TabItem Header="Добавление пользователя">
+                <StackPanel>
+                    <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
+                        <Label Margin="15,10,0,10" Width="150" Content="Логин:  "/>
+                        <ContentControl 
+                            Style="{StaticResource ValidationContentControl}">
+                            <TextBox Margin="100,0,0,0" Width="160" Height="30" Text="{Binding Login, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+                        </ContentControl>                       
+                    </StackPanel>
+                    <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
+                        <Label Margin="15,10,0,10" Width="150" Content="Пароль:  "/>
+                        <ContentControl 
+                            Style="{StaticResource ValidationContentControl}">
+                            <PasswordBox Margin="100,0,0,0"  Width="160" Height="30" VerticalAlignment="Top" behaviors:PasswordBoxAssistant.BindPassword="true"  behaviors:PasswordBoxAssistant.BoundPassword="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </ContentControl>
+                    </StackPanel>
+                    <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
+                        <Label Margin="15,10,0,10" Width="150" Content="Подтверждение пароля:  "/>
+                        <ContentControl 
+                            Style="{StaticResource ValidationContentControl}">
+                            <PasswordBox Margin="100,0,0,0"   Width="160" Height="30" VerticalAlignment="Top" behaviors:PasswordBoxAssistant.BindPassword="true"  behaviors:PasswordBoxAssistant.BoundPassword="{Binding Path=DuplicatePassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </ContentControl>
+                    </StackPanel>
+                    <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
+                        <Label Margin="15,10,0,10" Width="150" Content="Фамилия:  "/>
+                        <ContentControl 
+                            Style="{StaticResource ValidationContentControl}">
+                            <TextBox Margin="100,0,0,0" Width="160" Height="30" Text="{Binding SurName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+                        </ContentControl>
+                        </StackPanel>
+                    <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
+                        <Label Margin="15,10,0,10" Width="150" Content="Имя:  "/>
+                        <ContentControl 
+                            Style="{StaticResource ValidationContentControl}">
+                            <TextBox Margin="100,0,0,0" Width="160" Height="30" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+                        </ContentControl>
+                        </StackPanel>
+                    <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
+                        <Label Margin="15,10,0,10" Width="150" Content="E-mail:  "/>
+                        <ContentControl 
+                            Style="{StaticResource ValidationContentControl}">
+                            <TextBox Margin="100,0,0,0" Width="160" Height="30" Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+                        </ContentControl>
+                        </StackPanel>
+                    <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
+                        <Label Margin="15,10,0,10" Width="150" Content="Тип:  "/>
+                        <ContentControl 
+                            Style="{StaticResource ValidationContentControl}">
+                            <ComboBox Margin="100,0,0,0" Width="160" Height="30" ItemsSource="{Binding TypeItems}" SelectedItem="{Binding UserType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+                        </ContentControl>
+                        </StackPanel>
+                    <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
+                        <Label Margin="15,10,0,10" Width="150" Content="Дата рождения:  "/>
+                        <ContentControl 
+                            Style="{StaticResource ValidationContentControl}">
+                            <DatePicker Margin="100,0,0,0" Width="160" Height="30" SelectedDate="{Binding Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+                        </ContentControl>
+                        </StackPanel>
+                    <Button Height="30" Width="200" Margin="0,0,15,0" Click="AddUserButtonBase_OnClick" HorizontalAlignment="Right" Content="Добавить"/>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+        <mui:ModernProgressRing IsActive="{Binding TaskRunned}"  Style="{StaticResource WaveProgressRingStyle}" Height="20" VerticalAlignment="Bottom" Margin="10,0,720,0" Width="62"/>
+    </Grid>
+</controls:Window>
