@@ -11,7 +11,7 @@
                  params:Design.AccentBrush="Green" 
         params:Manager.AccentBrush="Green" 
                  params:Design.ContrastBrush="White" 
-        params:Manager.ContrastBrush="White" 
+        params:Manager.ContrastBrush="White" ResizeMode="CanMinimize" 
               Title="Login" Height="234.634" Width="342.962" Icon="icon.png">
     <Window.InputBindings>
         <KeyBinding Key="Enter" Command="{Binding LoginCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
@@ -19,8 +19,8 @@
     <Grid>
         <Label Content="Логин"  Margin="10,52,0,0" HorizontalAlignment="Left" Width="90" Height="30" VerticalAlignment="Top"/>
         <TextBox Margin="118,52,0,0" Text="{Binding Login}" HorizontalAlignment="Left" Width="161" Height="30" VerticalAlignment="Top"/>
-        <Label Content="Пароль" Margin="10,96,235,78"/>
+        <Label Content="Пароль" Margin="10,96,0,0" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left" Width="92"/>
         <PasswordBox Margin="118,96,0,0" HorizontalAlignment="Left" Width="161" Height="30" VerticalAlignment="Top" behaviors:PasswordBoxAssistant.BindPassword="true"  behaviors:PasswordBoxAssistant.BoundPassword="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-        <Button Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=LoginWindow}" Content="OK" Margin="0,0,10,10" HorizontalAlignment="Right" Width="100" Height="32" VerticalAlignment="Bottom"/>
+        <Button Command="{Binding LoginCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Content="OK" Margin="0,0,10,10" HorizontalAlignment="Right" Width="100" Height="32" VerticalAlignment="Bottom"/>
     </Grid>
 </controls:Window>
