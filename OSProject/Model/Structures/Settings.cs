@@ -19,6 +19,7 @@ namespace OSProject.Model.Structures
         public string InputData { get; set; }
         public string LineChart { get; set; }
         public string AreaChart { get; set; }
+        public string ColumnChart { get; set; }
 
         public string Notification { get; set; }
         public string NotificationMessage { get; set; }

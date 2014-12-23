@@ -3,8 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Loaded="UserWindow_OnLoaded"
                   IsFullScreenShortcutsEnabled="True"
-                 xmlns:controls="clr-namespace:Elysium.Controls;assembly=Elysium"
-        xmlns:params="http://schemas.codeplex.com/elysium/params"
+                  xmlns:params="http://schemas.codeplex.com/elysium/params"
         xmlns:controls1="http://schemas.extra.com/ui"
         xmlns:mui="http://firstfloorsoftware.com/ModernUI"
         xmlns:sparrowToolkit="http://sparrowtoolkit.codeplex.com/wpf"
@@ -63,47 +62,69 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="{Binding Settings.Consumption}" Binding="{Binding Consumption}" Width="*" />
-                            <DataGridTextColumn Header="{Binding Settings.LevelDeviation}" Binding="{Binding LevelDeviation}" Width="*" />
+                            <DataGridTextColumn Header="Расход, кг/c" Binding="{Binding Consumption}" Width="*" />
+                            <DataGridTextColumn Header="Отклонение уровня, мм" Binding="{Binding LevelDeviation}" Width="*" />
                             <DataGridTextColumn Header="{Binding Settings.Pressure}" Binding="{Binding Pressure}" Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
             </TabItem>
-            <TabItem Header="{Binding Settings.Chart}">
-                <TabControl>
-                    <TabItem Header="{Binding Settings.LineChart}">
-                        <Grid>
-                            <sparrowToolkit:SparrowChart Margin="10,0,10,47" Series="{Binding LineSeries}">
-                                <sparrowToolkit:SparrowChart.Legend>
-                                    <sparrowToolkit:Legend Header="Legend" LegendPosition="Inside" HorizontalAlignment="Right" VerticalAlignment="Top" ShowIcon="True"/>
-                                </sparrowToolkit:SparrowChart.Legend>
-                                <sparrowToolkit:SparrowChart.XAxis>
-                                    <sparrowToolkit:LinearXAxis/>
-                                </sparrowToolkit:SparrowChart.XAxis>
-                                <sparrowToolkit:SparrowChart.YAxis>
-                                    <sparrowToolkit:LinearYAxis/>
-                                </sparrowToolkit:SparrowChart.YAxis>
-                            </sparrowToolkit:SparrowChart>
-                        </Grid>
-                    </TabItem>
-                    <TabItem Header="{Binding Settings.AreaChart}">
-                        <Grid>
-                            <sparrowToolkit:SparrowChart Margin="10,0,10,47" Series="{Binding AreaSeries}">
-                                <sparrowToolkit:SparrowChart.Legend>
-                                    <sparrowToolkit:Legend Header="Legend" LegendPosition="Inside" HorizontalAlignment="Right" VerticalAlignment="Top" ShowIcon="True"/>
-                                </sparrowToolkit:SparrowChart.Legend>
-                                <sparrowToolkit:SparrowChart.XAxis>
-                                    <sparrowToolkit:LinearXAxis/>
-                                </sparrowToolkit:SparrowChart.XAxis>
-                                <sparrowToolkit:SparrowChart.YAxis>
-                                    <sparrowToolkit:LinearYAxis/>
-                                </sparrowToolkit:SparrowChart.YAxis>
-                            </sparrowToolkit:SparrowChart>
-                        </Grid>
-                    </TabItem>
-                </TabControl>
-
+            <TabItem Header="{Binding Settings.Chart}" >
+                <Grid>
+                    <TabControl>
+                        <TabItem Header="{Binding Settings.LineChart}" >
+                            <Grid>
+                                <sparrowToolkit:SparrowChart Margin="10,0,10,47">
+                                    <sparrowToolkit:SparrowChart.Legend>
+                                        <sparrowToolkit:Legend Header="Legend" LegendPosition="Inside" HorizontalAlignment="Right" VerticalAlignment="Top" ShowIcon="True"/>
+                                    </sparrowToolkit:SparrowChart.Legend>
+                                    <sparrowToolkit:SparrowChart.XAxis>
+                                        <sparrowToolkit:LinearXAxis/>
+                                    </sparrowToolkit:SparrowChart.XAxis>
+                                    <sparrowToolkit:SparrowChart.YAxis>
+                                        <sparrowToolkit:LinearYAxis/>
+                                    </sparrowToolkit:SparrowChart.YAxis>
+                                    <sparrowToolkit:LineSeries PointsSource="{Binding ResultData}" XPath="Consumption" YPath="LevelDeviation"/>
+                                    <sparrowToolkit:LineSeries PointsSource="{Binding ResultData}" XPath="Consumption" YPath="Pressure"/>
+                                </sparrowToolkit:SparrowChart>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="{Binding Settings.AreaChart}">
+                            <Grid>
+                                <sparrowToolkit:SparrowChart Margin="10,0,10,47">
+                                    <sparrowToolkit:SparrowChart.Legend>
+                                        <sparrowToolkit:Legend Header="Legend" LegendPosition="Inside" HorizontalAlignment="Right" VerticalAlignment="Top" ShowIcon="True"/>
+                                    </sparrowToolkit:SparrowChart.Legend>
+                                    <sparrowToolkit:SparrowChart.XAxis>
+                                        <sparrowToolkit:LinearXAxis/>
+                                    </sparrowToolkit:SparrowChart.XAxis>
+                                    <sparrowToolkit:SparrowChart.YAxis>
+                                        <sparrowToolkit:LinearYAxis/>
+                                    </sparrowToolkit:SparrowChart.YAxis>
+                                    <sparrowToolkit:AreaSeries PointsSource="{Binding ResultData}" XPath="Consumption" YPath="LevelDeviation"/>
+                                    <sparrowToolkit:AreaSeries PointsSource="{Binding ResultData}" XPath="Consumption" YPath="Pressure"/>
+                                </sparrowToolkit:SparrowChart>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="{Binding Settings.ColumnChart}" >
+                            <Grid>
+                                <sparrowToolkit:SparrowChart Margin="10,0,10,47">
+                                    <sparrowToolkit:SparrowChart.Legend>
+                                        <sparrowToolkit:Legend Header="Legend" LegendPosition="Inside" HorizontalAlignment="Right" VerticalAlignment="Top" ShowIcon="True"/>
+                                    </sparrowToolkit:SparrowChart.Legend>
+                                    <sparrowToolkit:SparrowChart.XAxis>
+                                        <sparrowToolkit:LinearXAxis/>
+                                    </sparrowToolkit:SparrowChart.XAxis>
+                                    <sparrowToolkit:SparrowChart.YAxis>
+                                        <sparrowToolkit:LinearYAxis/>
+                                    </sparrowToolkit:SparrowChart.YAxis>
+                                    <sparrowToolkit:ColumnSeries PointsSource="{Binding ResultData}" XPath="Consumption" YPath="LevelDeviation"/>
+                                    <sparrowToolkit:ColumnSeries PointsSource="{Binding ResultData}" XPath="Consumption" YPath="Pressure"/>
+                                </sparrowToolkit:SparrowChart>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
             </TabItem>
         </TabControl>
         <mui:ModernProgressRing IsActive="{Binding TaskRunned}"  Style="{StaticResource WaveProgressRingStyle}" Height="20" VerticalAlignment="Bottom" Margin="10,0,720,0" Width="62"/>

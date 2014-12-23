@@ -45,53 +45,28 @@ namespace OSProject.ViewModel
 
         #region DataCollections
 
-        private SeriesCollection _lineSeries;
-        private SeriesCollection _areaSeries;
         public int SelectedIndex { get; set; }                                                    // Selected item in data grid
         public Settings Settings { get; set; }
         public ObservableCollection<ResultData> ResultData // Result binding
         {
             get
             {
-                if (_resultData == null)
-                    _resultData = InitialCollectionInitialization();
+                if (_resultData != null) return _resultData;
+                _resultData = InitialCollectionInitialization();
                 return _resultData;
             }
             set
             {
                 _resultData = value;
                 RaisePropertyChanged("ResultData");
-                _lineSeries = null;
-                RaisePropertyChanged("LineSeries");
-                _areaSeries = null;
-                RaisePropertyChanged("AreaSeries");
             }
         }
 
-        public SeriesCollection LineSeries                                        // Result binding
-        {
-            get
-            {
-                if (_lineSeries == null)
-                    _lineSeries = InitialLineSeriesInitialization(ResultData);
-                return _lineSeries;
-            }
-        }
-
-        public SeriesCollection AreaSeries                                        // Result binding
-        {
-            get
-            {
-                if (_areaSeries == null)
-                    _areaSeries = InitialBarSeriesInitialization(ResultData);
-                return _areaSeries;
-            }
-        }
 
         #endregion
 
         #region Initializers
-        private static ObservableCollection<ResultData> InitialCollectionInitialization()
+        private ObservableCollection<ResultData> InitialCollectionInitialization()
         {
             var collection = new ObservableCollection<ResultData>();
             for (var i = 0.0; i < 10; i += 0.1)
@@ -101,27 +76,7 @@ namespace OSProject.ViewModel
             return collection;
         }
 
-        private static SeriesCollection InitialLineSeriesInitialization(ObservableCollection<ResultData> collection)
-        {
-            var seriesCollection = new SeriesCollection();
-            var lineSeries1 = new LineSeries { XPath = "Consumption", YPath = "LevelDeviation", PointsSource = collection };
-            seriesCollection.Add(lineSeries1);
-            var lineSeries2 = new LineSeries { XPath = "Consumption", YPath = "Pressure", PointsSource = collection };
-            seriesCollection.Add(lineSeries2);
-
-            return seriesCollection;
-        }
-
-        private static SeriesCollection InitialBarSeriesInitialization(ObservableCollection<ResultData> collection)
-        {
-            var seriesCollection = new SeriesCollection();
-            var areaSeries1 = new AreaSeries { XPath = "Consumption", YPath = "LevelDeviation", PointsSource = collection };
-            seriesCollection.Add(areaSeries1);
-            var areaSeries2 = new AreaSeries { XPath = "Consumption", YPath = "Pressure", PointsSource = collection };
-            seriesCollection.Add(areaSeries2);
-
-            return seriesCollection;
-        }
+        
         #endregion
 
         #region Commands
