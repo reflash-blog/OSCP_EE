@@ -86,6 +86,8 @@
                                     </sparrowToolkit:SparrowChart.YAxis>
                                     <sparrowToolkit:LineSeries PointsSource="{Binding ResultData}" XPath="Consumption" YPath="LevelDeviation"/>
                                     <sparrowToolkit:LineSeries PointsSource="{Binding ResultData}" XPath="Consumption" YPath="Pressure"/>
+                                    <sparrowToolkit:LineSeries PointsSource="{Binding ApproxData}" XPath="Consumption" YPath="LevelDeviation"/>
+                                    <sparrowToolkit:LineSeries PointsSource="{Binding ApproxData}" XPath="Consumption" YPath="Pressure"/>
                                 </sparrowToolkit:SparrowChart>
                             </Grid>
                         </TabItem>

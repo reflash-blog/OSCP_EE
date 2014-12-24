@@ -15,6 +15,13 @@ using Sparrow.Chart;
 
 namespace OSProject.ViewModel
 {
+    static class Extensions
+    {
+        public static IEnumerable<T> Clone<T>(this IEnumerable<T> listToClone) where T : ICloneable
+        {
+            return listToClone.Select(item => (T)item.Clone());
+        }
+    }
     class UserViewModel:ViewModelBase
     {
         #region Constructor
@@ -27,6 +34,7 @@ namespace OSProject.ViewModel
             return _userWindowViewModel ?? (_userWindowViewModel = new UserViewModel());
         }
         private ObservableCollection<ResultData> _resultData;
+        private ObservableCollection<ResultData> _approxData;
         #endregion
 
         #region ProgressBar
@@ -59,7 +67,47 @@ namespace OSProject.ViewModel
             {
                 _resultData = value;
                 RaisePropertyChanged("ResultData");
+                RaisePropertyChanged("ApproxData");
             }
+        }
+
+        public ObservableCollection<ResultData> ApproxData // Result binding
+        {
+            get
+            {
+                return ApproximateData();
+            }
+        }
+
+        private ObservableCollection<Model.Structures.ResultData> ApproximateData()
+        {
+            var data = ResultData.Clone();
+            var approxData = new ObservableCollection<ResultData>((IEnumerable<ResultData>)data);
+            double sumCons = 0;
+            double sumTemp = 0;
+            double sumPres = 0;
+            double sumSquareCons = 0;
+            double sumConsLevel = 0;
+            double sumConsPres = 0;
+            foreach (var mem in ResultData)
+            {
+                sumCons += mem.Consumption;
+                sumSquareCons += Math.Pow(mem.Consumption, 2);
+                sumConsLevel += (mem.Consumption * mem.LevelDeviation);
+                sumConsPres += (mem.Consumption * mem.Pressure);
+                sumTemp += mem.LevelDeviation;
+                sumPres += mem.Pressure;
+            }
+            double aConsTemp = (ResultData.Count * sumConsLevel - sumCons * sumTemp) / (ResultData.Count * sumSquareCons - Math.Pow(sumCons, 2));
+            double bConsTemp = (sumTemp - aConsTemp * sumCons) / ResultData.Count;
+            double aConsPres = (ResultData.Count * sumConsPres - sumCons * sumPres) / (ResultData.Count * sumSquareCons - Math.Pow(sumCons, 2));
+            double bConsPres = (sumPres - aConsPres * sumCons) / ResultData.Count;
+            foreach (var mem in approxData)
+            {
+                mem.LevelDeviation = mem.Consumption * aConsTemp + bConsTemp;
+                mem.Pressure = mem.Consumption * aConsPres + bConsPres;
+            }
+            return approxData;
         }
 
 

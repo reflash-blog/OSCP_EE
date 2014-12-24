@@ -33,6 +33,8 @@ namespace OSProject.Controller.DataBase
         {
             try
             {
+                if (_context.Users.FirstOrDefault(x => x.login.Equals(user.login)) == null)
+                    return false;
                 _context.Users.Add(user);
                 _context.SaveChangesAsync();
                 return true;

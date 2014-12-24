@@ -1,8 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 namespace OSProject.Model.Structures
 {
-    public class ResultData : INotifyPropertyChanged
+    public class ResultData : INotifyPropertyChanged, ICloneable
 
     {
         private double _consumption;
@@ -43,6 +44,16 @@ namespace OSProject.Model.Structures
                     this.PropertyChanged(this, new PropertyChangedEventArgs("Pressure"));
                 }
             }
+        }
+
+        public object Clone()
+        {
+            return new ResultData
+            {
+                Consumption = this.Consumption,
+                LevelDeviation = this.LevelDeviation,
+                Pressure = this.Pressure
+            };
         }
 
     public event PropertyChangedEventHandler PropertyChanged;
