@@ -152,7 +152,7 @@ namespace OSProject.View
                 }
                 else
                 {
-                    Notify("База данных", "Ошибка удаления пользователя " + user.login, new TimeSpan(300000000));
+                    Notify("База данных", "Ошибка удаления пользователя " + textBlock.Text, new TimeSpan(300000000));   // User is null
                 }
             }
         }
